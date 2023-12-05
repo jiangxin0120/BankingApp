@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
   },
 }, {
   timestamps: true // Automatically create createdAt and updatedAt fields
+}, { 
+  collection: 'project.users'  // Specify the collection name
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

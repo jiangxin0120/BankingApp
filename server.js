@@ -7,8 +7,7 @@ const userRoutes = require('./routes/userRoutes');
 connectDB();
 const app = express();
 app.use(express.json());
-
-app.use('/api/users', userRoutes); // Prefixes all user routes with /api/users
+app.use('/api', userRoutes); // Prefixes all user routes with /api/users
 app.use('/auth', userRoutes);      // Prefixes auth routes with /auth
 
 // Setting up the body parser middleware
@@ -22,15 +21,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route to serve the login page
-app.get('/login', (req, res) => {
+app.get('/', (req, res) => {
   res.render('login');
 });
 
 // Route to handle login logic
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  // Here you would handle the login verification
-  // For now, we'll just send a basic response
   res.send('Login Logic not implemented');
 });
 
