@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
 // Route to handle login logic
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  res.send('Login Logic not implemented');
+  res.send('Login Logic not developed yet');
 });
 
 
