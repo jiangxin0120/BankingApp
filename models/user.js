@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 // Define the User schema
 const userSchema = new mongoose.Schema({
+  userId: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true
+  },
   username: {
     type: String,
     required: true,
@@ -20,11 +26,11 @@ const userSchema = new mongoose.Schema({
     required: true
   },
 }, {
-  timestamps: true // Automatically create createdAt and updatedAt fields
-}, { 
-  collection: 'project.users'  // Specify the collection name
+  timestamps: true ,
+  collection: 'users'
 });
 
 const User = mongoose.model('User', userSchema);
 
 module.exports = User;
+

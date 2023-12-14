@@ -1,44 +1,53 @@
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-
+const Account = require('../models/account');
 const userController = {
-  // Create a new user
-  createUser: async (req, res) => {
+  createUser: async (req) => { 
     try {
-      // Create a new user instance with the plain password
+      const userId = new mongoose.Types.ObjectId().toString();
+
       const user = new User({
+        userId: userId,
         username: req.body.username,
         email: req.body.email,
-        password: req.body.password, // Storing the password as received (not secure)
+        password: req.body.password 
       });
-  
-      // Save the new user to the database
+
       await user.save();
-  
-      // Respond with the new user (excluding the password)
+
       const userWithoutPassword = user.toObject();
       delete userWithoutPassword.password;
-      res.status(201).json(userWithoutPassword);
+
+      return { success: true, user: userWithoutPassword };
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      throw error;
     }
-  },
+  }
+,
+
 
   // Authenticate a user
-  signIn: async (req, res) => {
+  signIn: async (req) => {
     try {
-      // Find the user by email
-      const user = await User.findOne({ email: req.body.email });
-  
+    
+
+      // Find the user by email or username
+      const user = await User.findOne({
+        $or: [
+          { email: req.body.email},
+          { username: req.body.username}
+        ]
+      });
       if (!user) {
-        return res.status(401).json({ error: 'Invalid login credentials' });
+        throw new Error('Invalid login credentials');
       }
   
       // Check if the password is correct (comparing plain text passwords)
       const isPasswordMatch = req.body.password === user.password;
       if (!isPasswordMatch) {
-        return res.status(401).json({ error: 'Invalid login credentials' });
+        throw new Error('Invalid login credentials');
       }
   
       // Create a JWT token
@@ -46,14 +55,17 @@ const userController = {
         expiresIn: '24h',
       });
   
-      // Respond with user (excluding the password) and token
+      // Prepare user data (excluding the password) to return
       const userWithoutPassword = user.toObject();
       delete userWithoutPassword.password;
-      res.json({ user: userWithoutPassword, token });
+  
+      // Return the user data and token
+      return { user: userWithoutPassword, token };
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      throw error; // Propagate the error to be caught by the route
     }
-  },
+  }
+  ,
 
   // List all users
   listAllUsers: async (req, res) => {
@@ -103,6 +115,16 @@ const userController = {
       res.status(500).json({ error: error.message });
     }
   },
-};
+
+
+  getUserAccounts: async (userId) => {
+    try {
+      const accounts = await Account.find({ userId: userId });
+      return accounts;
+    } catch (error) {
+      throw error;
+    }
+  }};
+  
 
 module.exports = userController;

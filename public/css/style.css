@@ -40,4 +40,36 @@ body {
   button[type="submit"]:hover {
     background-color: #4cae4c;
   }
-  
+  .navbar {
+    background-color: #004080; /* Dark blue background */
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-nav li {
+    margin-left: 20px;
+}
+
+.navbar-nav a {
+    color: white;
+    text-decoration: none;
+}
+
+.navbar-nav a:hover {
+    text-decoration: underline;
+}

@@ -4,14 +4,24 @@ const connectDB = require('./config/database');
 const bodyParser = require('body-parser');
 const path = require('path');
 const userRoutes = require('./routes/userRoutes');
+const registerRoutes = require('./routes/registerRoutes');
+const authRoutes = require('./routes/authRoutes');
+const session = require('express-session');
+
+
 connectDB();
 const app = express();
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(session({
+  secret: process.env.JWT_SECRET,
+  resave: false,
+  saveUninitialized: true
+}));
 app.use('/api', userRoutes); // Prefixes all user routes with /api/users
 app.use('/auth', userRoutes);      // Prefixes auth routes with /auth
-
-// Setting up the body parser middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(registerRoutes);// using register routes
+app.use(authRoutes);
 
 // Setting EJS as the template engine
 app.set('view engine', 'ejs');
@@ -25,11 +35,7 @@ app.get('/', (req, res) => {
   res.render('login');
 });
 
-// Route to handle login logic
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  res.send('Login Logic not developed yet');
-});
+
 
 
 
