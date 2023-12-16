@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/c869b2ed-5a20-43e3-bee0-607dbd4d4a43/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/ABCBankApp",
+    "appService.deploySubpath": "."
+}
