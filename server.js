@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 
 
 // Setting the port
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 
 // Starting the server
 app.listen(PORT, () => {
