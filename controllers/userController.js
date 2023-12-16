@@ -3,11 +3,15 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const Account = require('../models/account');
+function generateAccountId() {
+  // Generate a unique accountId
+  return 'ACC-' + Date.now(); // This will create an ID like "ACC-1618324827381"
+}
+
 const userController = {
   createUser: async (req) => { 
     try {
       const userId = new mongoose.Types.ObjectId().toString();
-
       const user = new User({
         userId: userId,
         username: req.body.username,
@@ -115,16 +119,32 @@ const userController = {
       res.status(500).json({ error: error.message });
     }
   },
-
-
-  getUserAccounts: async (userId) => {
+  createAccount: async (userId, accountType) => {
+    try {
+      const accountId = generateAccountId(); 
+      const newAccount = new Account({
+        accountId: accountId,
+        userId: userId,
+        accountType: accountType,
+        balance: 0 // Set the initial balance to 0
+      });
+  
+      await newAccount.save();
+      return newAccount;
+    } catch (error) {
+      throw error;
+    }
+  },
+ getUserAccounts: async (userId) => {
     try {
       const accounts = await Account.find({ userId: userId });
       return accounts;
     } catch (error) {
+      console.error("Error in getUserAccounts:", error);
       throw error;
     }
-  }};
-  
+  }
+  };
+
 
 module.exports = userController;

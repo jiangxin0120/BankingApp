@@ -6,6 +6,9 @@ const path = require('path');
 const userRoutes = require('./routes/userRoutes');
 const registerRoutes = require('./routes/registerRoutes');
 const authRoutes = require('./routes/authRoutes');
+const accountRoutes = require('./routes/accountRoutes');
+const transactionRoutes=require('./routes/transactionRoutes');
+const sendRoutes=require('./routes/sendRoutes');
 const session = require('express-session');
 
 
@@ -22,7 +25,9 @@ app.use('/api', userRoutes); // Prefixes all user routes with /api/users
 app.use('/auth', userRoutes);      // Prefixes auth routes with /auth
 app.use(registerRoutes);// using register routes
 app.use(authRoutes);
-
+app.use(accountRoutes);
+app.use(transactionRoutes);
+app.use(sendRoutes);
 // Setting EJS as the template engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

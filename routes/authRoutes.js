@@ -27,8 +27,7 @@ router.get('/main', async (req, res) => {
 
         const userId = req.session.user.userId;
         const username = req.session.user.username;
-        const accounts = await userController.getUserAccounts(userId) || [];
-
+        const accounts = await userController.getUserAccounts(userId);
         res.render('index', { username, accounts });
     } catch (error) {
         res.status(500).send("Error loading page: " + error.message);
@@ -37,6 +36,24 @@ router.get('/main', async (req, res) => {
 
 router.get('/account', (req, res) => {
     res.render('account');
+});
+
+router.get('/logout', (req, res) => {
+  if (req.session) {
+      // Destroy the session
+      req.session.destroy(err => {
+          if (err) {
+              // Handle error
+              res.status(500).send('Could not log out, please try again.');
+          } else {
+              // Redirect to the login page or home page after successful logout
+              res.redirect('/login');
+          }
+      });
+  } else {
+      // If there's no session, just redirect to the login page or home page
+      res.redirect('/login');
+  }
 });
 
 module.exports = router;

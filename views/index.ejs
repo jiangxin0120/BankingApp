@@ -2,30 +2,31 @@
 <html>
 <head>
     <title>Main Page</title>
-    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <%- include('partials/navbar') %>
 
-    <h1>Welcome, <%= username %>!</h1>
+    <div class="container mt-4">
+        <h1>Welcome, <%= username %>!</h1>
 
-    <h2>Account Overview</h2>
-    <div>
-        <% if (accounts && accounts.length > 0) { %>
-            <ul>
-                <% accounts.forEach(account => { %>
-                    <li>
-                        <span>Account ID: <%= account.accountId %></span><br>
-                        <span>Type: <%= account.accountType %></span><br>
-                        <span>Balance: <%= account.balance %></span>
-                    </li>
-                <% }); %>
-            </ul>
-        <% } else { %>
-            <p>No accounts found.</p>
-            <a href="/account">Create a new account</a>
-        <% } %>
+        <h2>Account Overview</h2>
+        <div>
+            <% if (accounts && accounts.length > 0) { %>
+                <ul class="list-group mt-3">
+                    <% accounts.forEach(account => { %>
+                        <li class="list-group-item">
+                            <strong>Account ID:</strong> <%= account.accountId %><br>
+                            <strong>Type:</strong> <%= account.accountType %><br>
+                            <strong>Balance:</strong> <%= account.balance %>
+                        </li>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No accounts found.</p>
+                <a href="/account" class="btn btn-primary mt-2">Create a new account</a>
+            <% } %>
+        </div>
     </div>
-   
 </body>
 </html>

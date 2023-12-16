@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Money</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-4">
+        <h1>Send Money</h1>
+
+        <!-- Transfer Between Accounts -->
+        <h2>Transfer Between Accounts</h2>
+        <form action="/sendmoney/account-transfer" method="post">
+            <div class="form-group">
+                <label for="fromAccount">From Account:</label>
+                <select id="fromAccount" name="fromAccount" class="form-control" required>
+                    <% accounts.forEach(account => { %>
+                        <option value="<%= account.accountId %>"><%= account.accountType %> - <%= account.balance %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="toAccount">To Account:</label>
+                <select id="toAccount" name="toAccount" class="form-control" required>
+                    <% accounts.forEach(account => { %>
+                        <option value="<%= account.accountId %>"><%= account.accountType %> - <%= account.balance %></option>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="transferAmount">Amount:</label>
+                <input type="number" id="transferAmount" name="transferAmount" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Transfer</button>
+        </form>
+
+        <!-- E-Transfer -->
+        <h2>E-Transfer</h2>
+        <form action="/sendmoney/e-transfer" method="post">
+            <div class="form-group">
+                <label for="fromAccountET">From Account:</label>
+                <select id="fromAccountET" name="fromAccountET" class="form-control" required>
+                    <% accounts.forEach(account => { %>
+                        <option value="<%= account.accountId %>"><%= account.accountType %> - <%= account.balance %></option>
+                    <% }); %>
+                </select>                
+            </div>
+            <div class="form-group">
+                <label for="toEmail">To Email:</label>
+                <input type="email" id="toEmail" name="toEmail" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="amountET">Amount:</label>
+                <input type="number" id="amountET" name="amount" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Send E-Transfer</button>
+        </form>
+    </div>
+</body>
+</html>

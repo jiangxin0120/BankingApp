@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Transactions</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-4">
+        <h1>Transactions</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>From (Account/Email)</th>
+                    <th>To (Account/Email)</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% transactions.forEach(transaction => { %>
+                    <tr>
+                        <td><%= transaction.from %></td>
+                        <td><%= transaction.to %></td>
+                        <td><%= transaction.amount %></td>
+                        <td><%= transaction.timestamp.toISOString().substring(0, 19).replace('T', ' ') %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

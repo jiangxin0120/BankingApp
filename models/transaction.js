@@ -6,8 +6,8 @@ const transactionSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  accountId: {
-    type: mongoose.Schema.Types.ObjectId,
+  userId: {
+    type: String,
     required: true,
     ref: 'Account'
   },
@@ -28,7 +28,7 @@ const transactionSchema = new mongoose.Schema({
     default: Date.now
   }
 }, { 
-  collection: 'project.transactions'  
+  collection: 'transactions'  
 });
 
 const Transaction = mongoose.model('Transaction', transactionSchema);

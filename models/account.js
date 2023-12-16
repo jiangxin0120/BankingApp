@@ -7,7 +7,7 @@ const accountSchema = new mongoose.Schema({
     unique: true
   },
   userId: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     required: true,
     ref: 'user' // refering to the user model
   },
@@ -22,7 +22,7 @@ const accountSchema = new mongoose.Schema({
 }, {
   timestamps: true
 },{ 
-    collection: 'project.accounts'  // Specify the collection name
+    collection: 'accounts'  // Specify the collection name
   });
 
 const Account = mongoose.model('Account', accountSchema);
